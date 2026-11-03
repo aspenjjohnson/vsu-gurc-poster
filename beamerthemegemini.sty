@@ -12,29 +12,60 @@
 \RequirePackage{calc}
 
 % ====================
-% Fonts
+% Fonts - automatic fallback
 % ====================
 
-\newfontfamily\Raleway[Ligatures=TeX]{Raleway}
-\newfontfamily\Lato[Ligatures=TeX]{Lato}
+\RequirePackage{fontspec}
 
 \usefonttheme{professionalfonts}
 
-\setsansfont{Lato}[
-  UprightFont=*-Light,
-  ItalicFont=*-LightItalic,
-  BoldFont=*-Regular,
-  BoldItalicFont=*-Italic
-]
+% Raleway font with fallback
+\IfFontExistsTF{Raleway}{
+    \newfontfamily\Raleway[Ligatures=TeX]{Raleway}
+}{
+    \newfontfamily\Raleway[Ligatures=TeX]{Latin Modern Sans}
+}
 
+% Lato font with fallback
+\IfFontExistsTF{Lato}{
+    \newfontfamily\Lato[Ligatures=TeX]{Lato}
+}{
+    \newfontfamily\Lato[Ligatures=TeX]{Latin Modern Sans}
+}
+
+% Main font with fallback
+\IfFontExistsTF{Lato}{
+    \setsansfont{Lato}
+}{
+    \setsansfont{Latin Modern Sans}
+}
+
+% Beamer font assignments
 \setbeamerfont{headline}{family=\Raleway}
-\setbeamerfont{headline title}{size=\Huge,series=\bfseries}
+\setbeamerfont{headline title}{
+    size=\Huge,
+    series=\bfseries
+}
 \setbeamerfont{headline author}{size=\Large}
 \setbeamerfont{headline institute}{size=\normalsize}
-\setbeamerfont{block title}{family=\Raleway,size=\large,series=\bfseries}
-\setbeamerfont{heading}{family=\Lato,series=\bfseries}
+
+\setbeamerfont{block title}{
+    family=\Raleway,
+    size=\large,
+    series=\bfseries
+}
+
+\setbeamerfont{heading}{
+    family=\Lato,
+    series=\bfseries
+}
+
 \setbeamerfont{caption}{size=\small}
-\setbeamerfont{footline}{family=\Raleway,size=\normalsize}
+\setbeamerfont{footline}{
+    family=\Raleway,
+    size=\normalsize
+}
+
 
 % ====================
 % Macros
