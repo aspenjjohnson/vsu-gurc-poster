@@ -1,61 +1,165 @@
-% Gemini theme
-% https://github.com/anishathalye/gemini
 
-% ====================
-% Definitions
-% ====================
+% Gemini Theme - VSU Research Poster
+% Custom Valdosta State University Colors
 
-% Color Palette
-% From https://brand.valdosta.edu/color/
-\definecolor{black}{RGB}{128, 0, 0}
-\definecolor{bonfire-red}{RGB}{118, 118, 118}
-\definecolor{magnolia-white}{RGB}{214, 214, 206}
-\definecolor{embers}{RGB}{214, 214, 206}
-% Secondary
-\definecolor{flame}{RGB}{248, 164, 41}
-\definecolor{sky}{RGB}{193, 102, 34}
-\definecolor{stone}{RGB}{143, 57, 49}
-\definecolor{lake}{RGB}{145, 171, 90}
-\definecolor{pine}{RGB}{88, 89, 63}
+% ==========================================
+% COLOR DEFINITIONS
+% ==========================================
 
+% Primary Colors
+\definecolor{VSUBlack}{RGB}{20,20,20}
+\definecolor{VSURed}{RGB}{218,26,50}
+\definecolor{VSUWhite}{RGB}{255,255,255}
+\definecolor{VSULightGray}{RGB}{245,245,245}
+\definecolor{VSUDarkGray}{RGB}{80,80,80}
 
-% ====================
-% Theme
-% ====================
+% Secondary Colors
+\definecolor{flame}{RGB}{248,164,41}
+\definecolor{sky}{RGB}{193,102,34}
+\definecolor{stone}{RGB}{143,57,49}
+\definecolor{lake}{RGB}{145,171,90}
+\definecolor{pine}{RGB}{88,89,63}
 
-% Basic colors
-\setbeamercolor{palette primary}{fg=black,bg=white}
-\setbeamercolor{palette secondary}{fg=black,bg=white}
-\setbeamercolor{palette tertiary}{bg=black,fg=white}
-\setbeamercolor{palette quaternary}{fg=black,bg=white}
-% \setbeamercolor{structure}{fg=violet}
+% ==========================================
+% BASIC COLORS
+% ==========================================
 
-% Headline
-\setbeamercolor{headline}{fg=white,bg=bonfire-red}
-\setbeamercolor{headline rule}{bg=bonfire-red}
+\setbeamercolor{normal text}{
+    fg=VSUBlack,
+    bg=VSUWhite
+}
 
-% Block
-\setbeamercolor{block title}{fg=embers,bg=white}
-\setbeamercolor{block separator}{bg=black}
-\setbeamercolor{block body}{fg=black,bg=white}
+\setbeamercolor{palette primary}{
+    fg=VSUBlack,
+    bg=VSUWhite
+}
 
-% Alert Block
-\setbeamercolor{block alerted title}{fg=bonfire-red,bg=lightgray}
-\setbeamercolor{block alerted separator}{bg=black}
-\setbeamercolor{block alerted body}{fg=black,bg=lightgray}
+\setbeamercolor{palette secondary}{
+    fg=VSUBlack,
+    bg=VSUWhite
+}
 
-% Heading
-\setbeamercolor{heading}{fg=black}
+\setbeamercolor{palette tertiary}{
+    fg=VSUWhite,
+    bg=VSUBlack
+}
 
-% Itemize
-\setbeamercolor{item}{fg=darkgray}
+\setbeamercolor{palette quaternary}{
+    fg=VSUBlack,
+    bg=VSUWhite
+}
 
-% Bibliography
-\setbeamercolor{bibliography item}{fg=black}
-\setbeamercolor{bibliography entry author}{fg=black}
-\setbeamercolor{bibliography entry title}{fg=black}
-\setbeamercolor{bibliography entry location}{fg=black}
-\setbeamercolor{bibliography entry note}{fg=black}
+\setbeamercolor{structure}{
+    fg=VSURed
+}
+
+% ==========================================
+% MAIN HEADLINE
+% Black background / White lettering
+% ==========================================
+
+\setbeamercolor{headline}{
+    fg=VSUWhite,
+    bg=VSUBlack
+}
+
+\setbeamercolor{headline rule}{
+    bg=VSURed
+}
+
+% ==========================================
+% REGULAR SECTION HEADERS
+% Red titles / White backgrounds
+% ==========================================
+
+\setbeamercolor{block title}{
+    fg=VSURed,
+    bg=VSUWhite
+}
+
+\setbeamercolor{block separator}{
+    bg=VSURed
+}
+
+\setbeamercolor{block body}{
+    fg=VSUBlack,
+    bg=VSUWhite
+}
+
+% ==========================================
+% ALERT BLOCKS
+% Red header / White lettering
+% Light-gray body
+% ==========================================
+
+\setbeamercolor{block alerted title}{
+    fg=VSULightGray,
+    bg=VSURed
+}
+
+\setbeamercolor{block alerted separator}{
+    bg=VSURed
+}
+
+\setbeamercolor{block alerted body}{
+    fg=VSUBlack,
+    bg=VSULightGray
+}
+
+% ==========================================
+% EXAMPLE BLOCKS
+% ==========================================
+
+\setbeamercolor{block example title}{
+    fg=VSUWhite,
+    bg=VSUBlack
+}
+
+\setbeamercolor{block example body}{
+    fg=VSUBlack,
+    bg=VSULightGray
+}
+
+% ==========================================
+% HEADINGS
+% ==========================================
+
+\setbeamercolor{heading}{
+    fg=VSURed
+}
+
+% ==========================================
+% BULLET POINTS
+% ==========================================
+
+\setbeamercolor{item}{
+    fg=VSURed
+}
+
+% ==========================================
+% BIBLIOGRAPHY
+% ==========================================
+
+\setbeamercolor{bibliography item}{
+    fg=VSUBlack
+}
+
+\setbeamercolor{bibliography entry author}{
+    fg=VSUBlack
+}
+
+\setbeamercolor{bibliography entry title}{
+    fg=VSUBlack
+}
+
+\setbeamercolor{bibliography entry location}{
+    fg=VSUBlack
+}
+
+\setbeamercolor{bibliography entry note}{
+    fg=VSUBlack
+}
+
 \setbeamertemplate{bibliography entry article}{}
 \setbeamertemplate{bibliography entry title}{}
 \setbeamertemplate{bibliography entry location}{}
