@@ -12,9 +12,41 @@
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[size=custom,width=120,height=72,scale=1.0]{beamerposter}
+\usepackage[size=custom,width=120,height=90,scale=1.0]{beamerposter}
 \usetheme{gemini}
 \usecolortheme{vsu}
+
+% ==========================================
+% CUSTOM POSTER FONT SIZES
+% ==========================================
+
+% Main research title
+\setbeamerfont{headline title}{
+    size={\fontsize{65}{73}\selectfont},
+    series=\bfseries
+}
+
+% Authors
+\setbeamerfont{headline author}{
+    size={\fontsize{32}{38}\selectfont}
+}
+
+% University affiliations
+\setbeamerfont{headline institute}{
+    size={\fontsize{26}{32}\selectfont}
+}
+
+% Section headings
+\setbeamerfont{block title}{
+    size={\fontsize{40}{47}\selectfont},
+    series=\bfseries
+}
+
+% Main content
+\setbeamerfont{block body}{
+    size={\fontsize{32}{40}\selectfont}
+}
+
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{doi}
@@ -29,18 +61,23 @@
 \def\translate#1{#1}%
 }
 
-% ====================
-% Lengths
-% ====================
+% ==========================================
+% COLUMN WIDTHS AND SPACING
+% ==========================================
 
-% If you have N columns, choose \sepwidth and \colwidth such that
-% (N+1)*\sepwidth + N*\colwidth = \paperwidth
 \newlength{\sepwidth}
 \newlength{\colwidth}
-\setlength{\sepwidth}{0.025\paperwidth}
-\setlength{\colwidth}{0.3\paperwidth}
 
-\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+% Reduce gaps between columns
+\setlength{\sepwidth}{0.0175\paperwidth}
+
+% Increase each column's width
+\setlength{\colwidth}{0.31\paperwidth}
+
+\newcommand{\separatorcolumn}{
+    \begin{column}{\sepwidth}
+    \end{column}
+}
 
 % ====================
 % Title
@@ -88,242 +125,420 @@
 \begin{frame}[t]
 \begin{columns}[t]
 \separatorcolumn
+%------------------
+% COLUMN #1
+%-------------------
 
 \begin{column}{\colwidth}
 
-  \begin{block}{A block title}
+  \begin{block}{Research Question} % Change this to be back or a darker color
 
-    Some block contents, followed by a diagram, followed by a dummy paragraph.
+    Can incorportaing Hessian Information- the curvature of the log-likelihood- improve volatility forecasts from score-driven models 
+    compared to conventional gradient scaling? 
 
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}[scale=6]
-        \draw[step=0.25cm,color=gray] (-1,-1) grid (1,1);
-        \draw (1,0) -- (0.2,0.2) -- (0,1) -- (-0.2,0.2) -- (-1,0)
-          -- (-0.2,-0.2) -- (0,-1) -- (0.2,-0.2) -- cycle;
-      \end{tikzpicture}
-      \caption{A figure caption.}
-    \end{figure}
+    \vspace{0.5cm}
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
-    eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
-    lobortis augue, ut lobortis turpis rhoncus sed. Proin feugiat nibh a
-    lacinia dignissim. Proin scelerisque, risus eget tempor fermentum, ex
-    turpis condimentum urna, quis malesuada sapien arcu eu purus.
+    \textbf{Main Goal:} Assess the Hessian-filter scaled Beta-t-EGARCH model (HF-Beta-t-EGARCH) across five distinct financial assets.
 
   \end{block}
 
-  \begin{block}{A block containing a list}
+  \begin{block}{Background \& Contribution} % Come back to this block and make the equations larger and make the box fit on the poster
 
-    Nam vulputate nunc felis, non condimentum lacus porta ultrices. Nullam sed
-    sagittis metus. Etiam consectetur gravida urna quis suscipit.
+    Financial returns have time-varying volatility, heavy tails, and occasional extreme observations. Models for changing market risk must update forecasts as new returns arrive.
+    
+    \vspace{0.1cm}
 
-    \begin{itemize}
-      \item \textbf{Mauris tempor} risus nulla, sed ornare
-      \item \textbf{Libero tincidunt} a duis congue vitae
-      \item \textbf{Dui ac pretium} morbi justo neque, ullamcorper
-    \end{itemize}
-
-    Eget augue porta, bibendum venenatis tortor.
+    The Beta-t-EGARCH framework uses the score (gradient) of a Student-t predictive density. The HF extension uses a filtered Hessian to scale that score, drawing on the curvature-aware idea behind Newton's method.
 
   \end{block}
 
-  \begin{alertblock}{A highlighted block}
+  \begin{alertblock}{Model: Gradient versus Hessian-Filter Scaling}
 
-    This block catches your eye, so \textbf{important stuff} should probably go
-    here.
+    Assume demeaned returns follow a Student-t specification:
 
-    Curabitur eu libero vehicula, cursus est fringilla, luctus est. Morbi
-    consectetur mauris quam, at finibus elit auctor ac. Aliquam erat volutpat.
-    Aenean at nisl ut ex ullamcorper eleifend et eu augue. Aenean quis velit
-    tristique odio convallis ultrices a ac odio.
+    \begin{center}
+      \[ 
+      y_t=e^{\lambda_t}\varepsilon_t,\quad \varepsilon_t\sim t(\nu),\quad \nu>2 
+      \]
+    \end{center}
 
-    \begin{itemize}
-      \item \textbf{Fusce dapibus tellus} vel tellus semper finibus. In
-        consequat, nibh sed mattis luctus, augue diam fermentum lectus.
-      \item \textbf{In euismod erat metus} non ex. Vestibulum luctus augue in
-        mi condimentum, at sollicitudin lorem viverra.
-      \item \textbf{Suspendisse vulputate} mauris vel placerat consectetur.
-        Mauris semper, purus ac hendrerit molestie, elit mi dignissim odio, in
-        suscipit felis sapien vel ex.
-    \end{itemize}
+    A general score-driven volatility update is:
+    \begin{center}
+      \[
+      \lambda_t=\omega+\beta\lambda_{t-1}+\alpha m_{t-1}
+      \]
+    \end{center}
 
-    Aenean tincidunt risus eros, at gravida lorem sagittis vel. Vestibulum ante
-    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
+    \textbf{Conventional Beta-t-EGARCH:}
+    \begin{center}
+      \[
+      m_{t-1}=g_{t-1}
+      \]
+    \end{center}
+
+    \textbf{HF-Beta-t-EGARCH:}
+    \begin{center}
+      \[
+      m_{t-1}=\frac{g_{t-1}}{\exp(\delta\widetilde h_t)}
+      \] 
+      \vspace{0.25cm}
+      \[
+      \widetilde h_t=\kappa+\gamma\widetilde h_{t-1}+h_{t-1}
+      \]
+    \end{center}
+
+    Here, \(g_{t-1}\) is the score; \(h_{t-1}\) is minus the second derivative of the log-density; and \(\widetilde h_t\) accumulates Hessian information.
+
+    Model estimation uses maximum likelihood.
 
   \end{alertblock}
 
 \end{column}
 
 \separatorcolumn
+%------------------
+% COLUMN #2
+%-------------------
 
 \begin{column}{\colwidth}
 
-  \begin{block}{A block containing an enumerated list}
 
-    Vivamus congue volutpat elit non semper. Praesent molestie nec erat ac
-    interdum. In quis suscipit erat. \textbf{Phasellus mauris felis, molestie
-    ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis
-    fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor. Nam
-    mollis condimentum purus quis sodales. Nullam eu felis eu nulla eleifend
-    bibendum nec eu lorem. Vivamus felis velit, volutpat ut facilisis ac,
-    commodo in metus.
-
-    \begin{enumerate}
-      \item \textbf{Morbi mauris purus}, egestas at vehicula et, convallis
-        accumsan orci. Orci varius natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus.
-      \item \textbf{Cras vehicula blandit urna ut maximus}. Aliquam blandit nec
-        massa ac sollicitudin. Curabitur cursus, metus nec imperdiet bibendum,
-        velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
-      \item \textbf{Vestibulum et massa diam}. Phasellus fermentum augue non
-        nulla accumsan, non rhoncus lectus condimentum.
-    \end{enumerate}
-
-  \end{block}
-
-  \begin{block}{Fusce aliquam magna velit}
-
-    Et rutrum ex euismod vel. Pellentesque ultricies, velit in fermentum
-    vestibulum, lectus nisi pretium nibh, sit amet aliquam lectus augue vel
-    velit. Suspendisse rhoncus massa porttitor augue feugiat molestie. Sed
-    molestie ut orci nec malesuada. Sed ultricies feugiat est fringilla
-    posuere.
+\begin{block}{Bitcoin Volatility Comparison}
 
     \begin{figure}
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-            scale only axis,
-            no markers,
-            domain=0:2*pi,
-            samples=100,
-            axis lines=center,
-            axis line style={-},
-            ticks=none]
-          \addplot[red] {sin(deg(x))};
-          \addplot[blue] {cos(deg(x))};
-        \end{axis}
-      \end{tikzpicture}
-      \caption{Another figure caption.}
+        \centering
+
+        \includegraphics[
+            width=0.50\linewidth
+        ]{assets/bitcoin_volatility_comparison.png}
+
+        \caption{Comparison of Beta-t-EGARCH
+        and HF-Beta-t-EGARCH volatility
+        estimates for Bitcoin.}
+
     \end{figure}
 
-  \end{block}
+\end{block}
 
-  \begin{block}{Nam cursus consequat egestas}
 
-    Nulla eget sem quam. Ut aliquam volutpat nisi vestibulum convallis. Nunc a
-    lectus et eros facilisis hendrerit eu non urna. Interdum et malesuada fames
-    ac ante \textit{ipsum primis} in faucibus. Etiam sit amet velit eget sem
-    euismod tristique. Praesent enim erat, porta vel mattis sed, pharetra sed
-    ipsum. Morbi commodo condimentum massa, \textit{tempus venenatis} massa
-    hendrerit quis. Maecenas sed porta est. Praesent mollis interdum lectus,
-    sit amet sollicitudin risus tincidunt non.
+\begin{block}{Financial Assets Used}
 
-    Etiam sit amet tempus lorem, aliquet condimentum velit. Donec et nibh
-    consequat, sagittis ex eget, dictum orci. Etiam quis semper ante. Ut eu
-    mauris purus. Proin nec consectetur ligula. Mauris pretium molestie
-    ullamcorper. Integer nisi neque, aliquet et odio non, sagittis porta justo.
+    \begin{table}
+        \centering
 
-    \begin{itemize}
-      \item \textbf{Sed consequat} id ante vel efficitur. Praesent congue massa
-        sed est scelerisque, elementum mollis augue iaculis.
-        \begin{itemize}
-          \item In sed est finibus, vulputate
-            nunc gravida, pulvinar lorem. In maximus nunc dolor, sed auctor eros
-            porttitor quis.
-          \item Fusce ornare dignissim nisi. Nam sit amet risus vel lacus
-            tempor tincidunt eu a arcu.
-          \item Donec rhoncus vestibulum erat, quis aliquam leo
-            gravida egestas.
-        \end{itemize}
-      \item \textbf{Sed luctus, elit sit amet} dictum maximus, diam dolor
-        faucibus purus, sed lobortis justo erat id turpis.
-      \item \textbf{Pellentesque facilisis dolor in leo} bibendum congue.
-        Maecenas congue finibus justo, vitae eleifend urna facilisis at.
-    \end{itemize}
+        \begin{tabular}{lccc}
+            \toprule
+            Asset & Ticker/Series & Absolute & RV \\
+            \midrule
+            Bitcoin & BITCOIN Index & 2.73 & 2.61 \\
+            S\&P 500 & IVV US Equity & 2.18 & 2.25 \\
+            Gold & IAU US Equity & 5.32 & 7.10 \\
+            REIT & REIT Index & 3.16 & 2.93 \\
+            Yen & FXY US Equity & 5.00 & 5.62 \\
+            \bottomrule
+        \end{tabular}
 
-  \end{block}
+        \caption{Diebold--Mariano test
+        statistics comparing Beta-t-EGARCH
+        with HF-Beta-t-EGARCH.}
+
+        \textbf{Data Source:} Bloomberg daily returns from July 19, 2010, to January 15, 2025.
+
+        The dataset contains 3,648 observations per asset. Returns are demeaned before fitting.
+
+    \end{table}
+
+\end{block}
+
+\begin{block}{Forecasting Methodology and Results}
+      Out-of-Sample Forecasting Design
+
+      \begin{itemize}
+        \item \textbf{Forecasting approach:} One-day-ahead predictions using a rolling estimation window of 2,634 observations.
+        \item \textbf{Forecast period:} January 4, 2021, to January 15, 2025, consisting of 1,014 observations.
+        \item \textbf{Benchmark models:} Normal-GARCH, Beta-t-EGARCH, and HE-Beta-t-EGARCH.
+        \item \textbf{Volatility proxies:} Absolute returns \(|y_t|\) and realized volatility (RV).
+        \item \textbf{Evaluation methods:} Squared-error loss and Diebold–Mariano tests. Positive test statistics indicate superior forecasting performance for the HF model.
+      \end{itemize}
+
+    \begin{table}
+        \centering
+
+        \begin{tabular}{lccc}
+            \toprule
+            Asset & Ticker/Series & Absolute & RV \\
+            \midrule
+            Bitcoin & BITCOIN Index & 2.73 & 2.61 \\
+            S\&P 500 & IVV US Equity & 2.18 & 2.25 \\
+            Gold & IAU US Equity & 5.32 & 7.10 \\
+            REIT & REIT Index & 3.16 & 2.93 \\
+            Yen & FXY US Equity & 5.00 & 5.62 \\
+            \bottomrule
+        \end{tabular}
+
+        \caption{Diebold--Mariano test
+        statistics comparing Beta-t-EGARCH
+        with HF-Beta-t-EGARCH.}
+
+        \textbf{Data Source:} Bloomberg daily returns from July 19, 2010, to January 15, 2025.
+
+        The dataset contains 3,648 observations per asset. Returns are demeaned before fitting.
+
+    \end{table}
+
+\end{block}
+
+%------------------
+% COLUMN #3
+%-------------------
 
 \end{column}
 
 \separatorcolumn
 
+% ==========================================
+% COLUMN 3: RESULTS AND CONCLUSION
+% ==========================================
+
 \begin{column}{\colwidth}
 
-  \begin{exampleblock}{A highlighted block containing some math}
+% ==========================================
+% SECTION 9: PREDICTIVE DENSITY COMPARISON
+% ==========================================
 
-    A different kind of highlighted block.
+\begin{block}{9. Predictive Density Comparison}
 
-    $$
-    \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-    $$
+The Geweke--Amisano test statistics compare the
+predictive density of HF-Beta-t-EGARCH against
+each benchmark model.
 
-    Interdum et malesuada fames $\{1, 4, 9, \ldots\}$ ac ante ipsum primis in
-    faucibus. Cras eleifend dolor eu nulla suscipit suscipit. Sed lobortis non
-    felis id vulputate.
+Positive test statistics indicate superior
+density forecasting performance for
+HF-Beta-t-EGARCH.
 
-    \heading{A heading inside a block}
+\vspace{0.5cm}
 
-    Praesent consectetur mi $x^2 + y^2$ metus, nec vestibulum justo viverra
-    nec. Proin eget nulla pretium, egestas magna aliquam, mollis neque. Vivamus
-    dictum $\mathbf{u}^\intercal\mathbf{v}$ sagittis odio, vel porta erat
-    congue sed. Maecenas ut dolor quis arcu auctor porttitor.
+\begin{table}
+    \centering
+    \small
 
-    \heading{Another heading inside a block}
-
-    Sed augue erat, scelerisque a purus ultricies, placerat porttitor neque.
-    Donec $P(y \mid x)$ fermentum consectetur $\nabla_x P(y \mid x)$ sapien
-    sagittis egestas. Duis eget leo euismod nunc viverra imperdiet nec id
-    justo.
-
-  \end{exampleblock}
-
-  \begin{block}{Nullam vel erat at velit convallis laoreet}
-
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos. Phasellus libero enim, gravida sed erat sit amet,
-    scelerisque congue diam. Fusce dapibus dui ut augue pulvinar iaculis.
-
-    \begin{table}
-      \centering
-      \begin{tabular}{l r r c}
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{lccc}
         \toprule
-        \textbf{First column} & \textbf{Second column} & \textbf{Third column} & \textbf{Fourth} \\
+
+        \textbf{Financial Asset}
+        & \textbf{Normal-GARCH}
+        & \textbf{Beta-t-EGARCH}
+        & \textbf{HE-Beta-t-EGARCH} \\
+
         \midrule
-        Foo & 13.37 & 384,394 & $\alpha$ \\
-        Bar & 2.17 & 1,392 & $\beta$ \\
-        Baz & 3.14 & 83,742 & $\delta$ \\
-        Qux & 7.59 & 974 & $\gamma$ \\
+
+        Bitcoin
+        & $2.30^{**}$
+        & $1.49$
+        & $1.54$ \\
+
+        S\&P 500 ETF
+        & $1.71^{*}$
+        & $1.56$
+        & $1.45$ \\
+
+        Gold ETF
+        & $1.99^{**}$
+        & $1.74^{*}$
+        & $1.60$ \\
+
+        S\&P US REIT
+        & $2.78^{***}$
+        & $2.75^{***}$
+        & $2.39^{**}$ \\
+
+        Japanese Yen Trust
+        & $2.99^{***}$
+        & $1.91^{*}$
+        & $2.26^{**}$ \\
+
         \bottomrule
-      \end{tabular}
-      \caption{A table caption.}
-    \end{table}
+    \end{tabular}
+    }
 
-    Donec quis posuere ligula. Nunc feugiat elit a mi malesuada consequat. Sed
-    imperdiet augue ac nibh aliquet tristique. Aenean eu tortor vulputate,
-    eleifend lorem in, dictum urna. Proin auctor ante in augue tincidunt
-    tempor. Proin pellentesque vulputate odio, ac gravida nulla posuere
-    efficitur. Aenean at velit vel dolor blandit molestie. Mauris laoreet
-    commodo quam, non luctus nibh ullamcorper in. Class aptent taciti sociosqu
-    ad litora torquent per conubia nostra, per inceptos himenaeos.
+    \caption{
+        Geweke--Amisano predictive density
+        comparison test statistics.
+    }
 
-    Nulla varius finibus volutpat. Mauris molestie lorem tincidunt, iaculis
-    libero at, gravida ante. Phasellus at felis eu neque suscipit suscipit.
-    Integer ullamcorper, dui nec pretium ornare, urna dolor consequat libero,
-    in feugiat elit lorem euismod lacus. Pellentesque sit amet dolor mollis,
-    auctor urna non, tempus sem.
+\end{table}
 
-  \end{block}
+\vspace{0.3cm}
 
-  \begin{block}{References}
+\footnotesize{
+    $^{***}p < 0.01$,
+    $^{**}p < 0.05$,
+    $^{*}p < 0.10$.
 
-    \nocite{*}
-    \footnotesize{\bibliographystyle{plainnat}\bibliography{poster}}
+    Source: Manuscript Table 2(c).
+}
 
-  \end{block}
+\vspace{0.5cm}
+
+At the 10\% significance level,
+HF-Beta-t-EGARCH demonstrates statistically
+significant improvements over:
+
+\begin{itemize}
+
+    \item \textbf{Normal-GARCH:}
+    Five out of five financial assets.
+
+    \item \textbf{Beta-t-EGARCH:}
+    Three out of five financial assets.
+
+    \item \textbf{HE-Beta-t-EGARCH:}
+    Two out of five financial assets.
+
+\end{itemize}
+
+\end{block}
+
+% ==========================================
+% SECTION 10: BITCOIN VOLATILITY PATHS
+% ==========================================
+
+\begin{block}{10. Illustration: Bitcoin Volatility Paths}
+
+\textbf{Bitcoin Returns and Fitted Volatility,
+2010--2025}
+
+\vspace{0.5cm}
+
+% Replace the file path below with the actual
+% location of your Bitcoin comparison figure.
+% If the image does not exist, a placeholder
+% will appear instead of a compilation error.
+
+\begin{figure}
+    \centering
+
+    \IfFileExists{assets/bitcoin_volatility_comparison.png}{%
+        \includegraphics[
+            width=0.95\linewidth
+        ]{assets/bitcoin_volatility_comparison.png}
+    }{%
+        \fbox{%
+            \parbox[c][5cm][c]{0.85\linewidth}{%
+                \centering
+                Insert Bitcoin volatility comparison figure
+            }%
+        }
+    }
+
+    \caption{
+        Bitcoin daily returns and fitted volatility
+        under Beta-t-EGARCH and HF-Beta-t-EGARCH.
+        Source: Supplementary Figure A1(e)--(f).
+    }
+
+\end{figure}
+
+\vspace{0.3cm}
+
+Supplementary Figure A1(e)--(f) illustrates
+daily Bitcoin returns (black) and fitted
+volatility (red) from 2010 to 2025.
+
+\begin{itemize}
+
+    \item \textbf{Left Panel:}
+    Beta-t-EGARCH.
+
+    \item \textbf{Right Panel:}
+    HF-Beta-t-EGARCH.
+
+\end{itemize}
+
+\end{block}
+
+% ==========================================
+% SECTION 11: INTERPRETATION AND IMPLICATIONS
+% ==========================================
+
+\begin{block}{11. Interpretation and Implications}
+
+\textbf{Volatility Forecasting}
+
+HF-Beta-t-EGARCH consistently improves
+one-step-ahead volatility forecast performance
+in this five-asset study.
+
+\vspace{0.5cm}
+
+\textbf{Density Forecasting}
+
+Improvements relative to normal-GARCH are
+widespread. However, statistical evidence of
+improvements relative to other Beta-t-EGARCH
+variants is less uniform.
+
+\vspace{0.5cm}
+
+\textbf{Practical Applications}
+
+The findings suggest potential improvements
+in financial risk forecasting and the
+simulation of financial returns.
+
+\end{block}
+
+% ==========================================
+% SECTION 12: SELECTED REFERENCES AND NOTES
+% ==========================================
+
+\begin{block}{12. Selected References and Notes}
+
+\footnotesize{
+
+\begin{enumerate}
+
+    \item
+    Blazsek, S., Escribano, A., \& Ayala, A.
+    (2025).
+    \textit{Improved Gradient Scaling for
+    Score-Driven Filters with an Application
+    to Stock Market Volatility.}
+
+    \item
+    Harvey, A. C., \& Chakravarty, T.
+    (2008).
+    \textit{Beta-t-(E)GARCH.}
+
+    \item
+    Bollerslev, T. (1986).
+    \textit{Generalized Autoregressive
+    Conditional Heteroskedasticity.}
+
+\end{enumerate}
+
+\vspace{0.3cm}
+
+\textbf{Research Data and Results:}
+
+Blazsek, Johnson, and Kobor.
+\textit{An Empirical Application of Improved
+Gradient Scaling for Score-Driven Volatility
+Filters.}
+
+Manuscript and supplementary material.
+
+}
+
+\end{block}
+
+% ==========================================
+% END OF COLUMN 3
+% ==========================================
 
 \end{column}
+
 
 \separatorcolumn
 \end{columns}
