@@ -86,25 +86,31 @@
     bg=VSUWhite
 }
 
-% ==========================================
-% ALERT BLOCKS
-% Red header / White lettering
-% Light-gray body
-% ==========================================
 
+
+% ==========================================
+% ALERT BLOCK COLORS
+% ==========================================
+\setbeamertemplate{block alerted begin}
+
+% Red heading with white lettering
 \setbeamercolor{block alerted title}{
-    fg=VSULightGray,
+    fg=VSUWhite,
     bg=VSURed
 }
 
+% Red separator
 \setbeamercolor{block alerted separator}{
     bg=VSURed
 }
 
+% Light-gray box with black lettering
 \setbeamercolor{block alerted body}{
     fg=VSUBlack,
     bg=VSULightGray
 }
+
+
 
 % ==========================================
 % EXAMPLE BLOCKS

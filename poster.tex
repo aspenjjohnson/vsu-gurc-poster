@@ -100,9 +100,9 @@
 % Title
 % ====================
 
-\title{An empirical application of improved gradient scaling\\ for score-driven volatility filters}
+\title{An Empirical Application of Improved Gradient Scaling\\ for Score-Driven Volatility Filters}
 
-\author{Szabolcs Blaszec\inst{1} \and Aspen Johnson \inst{2} \and Adam Kobor\inst{3}}
+\author{Szabolcs Blazsek\inst{1} \and Aspen Johnson \inst{2} \and Adam Kobor\inst{3}}
 
 \institute[shortinst]{\inst{1} Mercer University \samelineand \inst{2} Valdosta State University \samelineand \inst{3} New York University}
 
@@ -110,7 +110,7 @@
 % Footer (optional)
 % ====================
 
-\footercontent{ \hfill
+\footercontent{ 
   GURC Conference 2026, Milledgville, Georgia 
   }
  %(can be left out to remove footer)
@@ -130,40 +130,53 @@
 
 \begin{document}
 
-% ======================================
-% COMPACT VSU HEADER LOGOS
-% ======================================
 
+% ==========================================
+% VSU HEADER LOGOS - SIZE AND POSITION
+% ==========================================
 
 \addtobeamertemplate{headline}{}{
-    \begin{tikzpicture}[remember picture,overlay]
+    \begin{tikzpicture}[remember picture, overlay]
 
-        % Left: Valdosta State University logo
+        % ==================================
+        % LEFT: Full VSU University Logo
+        % ==================================
+
         \node[
             anchor=north west,
             xshift=1.5cm,
-            yshift=1cm,
+            yshift=-0.5cm,
             inner sep=0pt
         ] at (current page.north west) {
+
             \includegraphics[
-                height=4.5cm
+                height=8.0cm,
+                keepaspectratio
             ]{logos/VSU-Full.png}
+
         };
 
-        % Right: VSU emblem
+        % ==================================
+        % RIGHT: VSU Emblem
+        % ==================================
+
         \node[
             anchor=north east,
             xshift=-1.5cm,
-            yshift=-0.8cm,
+            yshift=-1.5cm,
             inner sep=0pt
         ] at (current page.north east) {
+
             \includegraphics[
-                height=5.5cm
+                height=6.0cm,
+                keepaspectratio
             ]{logos/VSU-logo-only.png}
+
         };
 
     \end{tikzpicture}
 }
+
 
 
 
@@ -176,18 +189,18 @@
 
 \begin{column}{\colwidth}
 
-  \begin{alertblock}{Research question}
-Can information about the \textbf{curvature of the log-likelihood} improve the volatility forecasts produced by score-driven models?
+    \begin{alertblock}{Research Question}
+        Can information about the \textbf{curvature of the log-likelihood} improve the volatility forecasts produced by score-driven models?
 
-\thinspaceafter
-\textbf{Study objective:} Compare HF-Beta-t-EGARCH with conventional gradient-scaled and other volatility models across five financial assets.
-\end{alertblock}
+        \thinspaceafter
+        \textbf{Study objective:} Compare HF-Beta-t-EGARCH with conventional gradient-scaled and other volatility models across five financial assets.
+    \end{alertblock}
 
 \begin{block}{Financial Assets Used}
 {\fontsize{29}{36}\selectfont
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}ll@{}}
 \toprule
-\textbf{Financial asset} & \textbf{Bloomberg ticker / series}\\
+\textbf{Financial asset} & \textbf{Bloomberg Ticker / Series}\\
 \midrule
 Bitcoin & BITCOIN Index\\
 S\&P 500 ETF & IVV US Equity\\
@@ -201,26 +214,26 @@ Japanese Yen Trust & FXY US Equity\\
 \end{block}
 
 \begin{block}{Mathematical Framework}
-\textbf{Student-$t$ return specification} (manuscript Eq. 1):
+\textbf{Student-$t$ return specification}:
 \[
  y_t=e^{\lambda_t}\varepsilon_t,\qquad
  \varepsilon_t\overset{\mathrm{i.i.d.}}{\sim}t(\nu),\quad \nu>2.
 \]
-\textbf{General score-driven recursion} (Eq. 7):
+\textbf{General score-driven recursion}:
 \[
  \lambda_t=\omega+\beta\lambda_{t-1}+\alpha m_{t-1}.
 \]
 \textbf{Conventional Beta-$t$-EGARCH:}\quad $m_{t-1}=g_{t-1}$.
 
 \thinspaceafter
-\textbf{HF-Beta-$t$-EGARCH} (manuscript Table 1(f)):
+\textbf{HF-Beta-$t$-EGARCH}:
 \[
  \boxed{\displaystyle m_{t-1}=\frac{g_{t-1}}{\exp(\delta\widetilde{h}_t)}}
 \]
 \[
  \widetilde{h}_t=\kappa+\gamma\widetilde{h}_{t-1}+h_{t-1},\quad |\gamma|<1.
 \]
-\textbf{Score and negative Hessian} (Eqs. 4--5):
+\textbf{Score and negative Hessian}:
 \[
  \begin{aligned}
   g_t &= \frac{(\nu+1)y_t^2}{\nu e^{2\lambda_t}+y_t^2}-1,\\[0.2cm]
@@ -232,7 +245,7 @@ Japanese Yen Trust & FXY US Equity\\
 
 \vspace{-0.5cm}
 % Heavy Tails in the Sample
-\begin{block}{Heavy tails in the sample}
+\begin{block}{Heavy Tails In the Sample}
 \begin{center}
 \includegraphics[width=\linewidth,height=11.5cm,keepaspectratio]{assets/excess_kurtosis.pdf}
 \end{center}
@@ -248,7 +261,7 @@ Japanese Yen Trust & FXY US Equity\\
 
 \begin{column}{\colwidth}
     
-\begin{block}{Out-of-sample forecast design}
+\begin{block}{Out-of-Sample Forecast Design}
 \begin{itemize}
  \setlength{\itemsep}{0.12cm}
  \item \textbf{Rolling estimation:} $T_r=2{,}634$ observations.
@@ -280,7 +293,7 @@ Japanese Yen Trust & FXY US Equity\\
 %\end{alertblock}
 
 \begin{block}{Evidence from In-Sample Model Fit}
-The HF specification achieves the \textbf{highest log-likelihood and lowest AIC} across the seven reported model specifications for all five assets. This is \textbf{not} a claim that HF ranks first under BIC or HQC (Supplementary Table A2).
+The HF specification achieves the \textbf{highest log-likelihood and lowest AIC} across the seven reported model specifications for all five assets. This is \textbf{not} a claim that HF ranks first under BIC or HQC .
 \end{block}
 
 \begin{block}{How the Updating Mechanism Differs}
@@ -300,7 +313,7 @@ The HF specification achieves the \textbf{highest log-likelihood and lowest AIC}
 % ==========================================
 
 \begin{column}{\colwidth}
-\begin{block}{Predictive density performance}
+\begin{block}{Predictive Density Performance}
 \minor{Geweke--Amisano density forecast comparison statistics. \textbf{Positive statistics favor HF-Beta-$t$-EGARCH}; columns indicate the comparison benchmark.}
 \vspace{0.16cm}
 {\fontsize{27}{34}\selectfont
@@ -321,7 +334,7 @@ Yen Trust & $2.99^{***}$ & $1.91^{*}$ & $2.26^{**}$\\
 \textbf{Significant gains at $p<0.10$:} normal-GARCH \textbf{5/5}; Beta-$t$-EGARCH \textbf{3/5}; HE-Beta-$t$-EGARCH \textbf{2/5}.
 \end{block}
 
-\begin{block}{Illustration: Bitcoin volatility paths}
+\begin{block}{Illustration: Bitcoin Volatility Paths}
 \begin{center}
 \includegraphics[width=0.49\linewidth]{assets/bitcoin_A1_e.png}\hfill
 \includegraphics[width=0.49\linewidth]{assets/bitcoin_A1_f.png}
@@ -329,7 +342,7 @@ Yen Trust & $2.99^{***}$ & $1.91^{*}$ & $2.26^{**}$\\
 \captiontext{Demeaned daily Bitcoin returns (black) and estimated volatility (red), 2010--2025. \textbf{Left:} Beta-$t$-EGARCH; \textbf{right:} HF-Beta-$t$-EGARCH. Source: Supplementary Fig. A1(e)--(f).}
 \end{block}
 
-\begin{block}{Cross-market illustration: Gold ETF}
+\begin{block}{Cross-Market Illustration: Gold ETF}
 \begin{center}
 \includegraphics[width=0.49\linewidth]{assets/gold_A3_e.png}\hfill
 \includegraphics[width=0.49\linewidth]{assets/gold_A3_f.png}
@@ -337,7 +350,7 @@ Yen Trust & $2.99^{***}$ & $1.91^{*}$ & $2.26^{**}$\\
 \captiontext{Gold ETF daily returns (black) and fitted volatility (red), 2010--2025. Left: Beta-$t$-EGARCH; right: HF-Beta-$t$-EGARCH (Supplementary Fig. A3(e)--(f)).}
 \end{block}
 
-\begin{alertblock}{Interpretation and implications}
+\begin{alertblock}{Interpretation and Implications}
 \begin{itemize}
  \setlength{\itemsep}{0.16cm}
  \item \textbf{Volatility:} HF consistently outperforms the three benchmark models in this five-asset, one-day-ahead forecasting exercise.
